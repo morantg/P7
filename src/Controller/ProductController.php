@@ -27,4 +27,15 @@ class ProductController extends AbstractController
           }
         return $product;
     }
+
+    /**
+     * @Get("api/products", name="app_product_list")
+     * @View()
+     */
+    public function listAction()
+    {
+        $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
+        
+        return $products;
+    }
 }
