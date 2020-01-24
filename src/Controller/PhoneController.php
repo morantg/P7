@@ -19,7 +19,7 @@ class PhoneController extends AbstractController
     {
         $phones = $phoneRepository->findAll();
 
-        return $this->json($phones, 200);
+        return $this->json($phones, 200, [], ['groups' => 'phone:read']);
     }
 }
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")
@@ -18,36 +19,43 @@ class Phone
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("phone:read")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("phone:read")
      */
     private $reference;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("phone:read")
      */
     private $couleur;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("phone:read")
      */
     private $dimension;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("phone:read")
      */
     private $prix;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("phone:read")
      */
     private $image;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups("phone:read")
      */
     private $description;
 
