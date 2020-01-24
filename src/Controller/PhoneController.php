@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Phone;
 use App\Repository\PhoneRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,18 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class PhoneController extends AbstractController
 {
+    
+    /**
+     * @Route("/api/phones/{id}", name="app_phones_show", methods={"GET"})
+     */
+    public function showAction(Phone $phone, PhoneRepository $phoneRepository, Request $request)
+    {
+        
+        $phone = $phoneRepository->find($phone->getId());
+
+        return $this->json($phone, 200, [], ['groups' => 'phone:read']);
+    }
+    
     /**
      * @Route("/api/phones/{page<\d+>?1}", name="app_phones_list", methods={"GET"})
      */
@@ -28,6 +41,8 @@ class PhoneController extends AbstractController
 
         return $this->json($phones, 200, [], ['groups' => 'phone:read']);
     }
+
+    
 }
 
 
