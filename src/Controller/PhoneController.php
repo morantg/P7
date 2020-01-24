@@ -13,11 +13,18 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class PhoneController extends AbstractController
 {
     /**
-     * @Route("/api/phones", name="app_phones_list", methods={"GET"})
+     * @Route("/api/phones/{page<\d+>?1}", name="app_phones_list", methods={"GET"})
      */
     public function listAction(PhoneRepository $phoneRepository, Request $request)
     {
-        $phones = $phoneRepository->findAll();
+        
+        $page = $request->query->get('page');
+        if(is_null($page) || $page < 1){
+            $page = 1;
+        }
+        $limit = 2;
+        
+        $phones = $phoneRepository->findAllPhones($page, $limit);
 
         return $this->json($phones, 200, [], ['groups' => 'phone:read']);
     }
