@@ -49,6 +49,11 @@ class PhoneController extends AbstractController
      */
     public function createAction(Request $request, SerializerInterface $serializer, EntityManagerInterface $em)
     {
+        
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            return new JsonResponse(['error' => 'Role ADMIN nécessaire'], 401);
+        }
+        
         $jsonRecu = $request->getContent();
 
         $phone = $serializer->deserialize($jsonRecu, Phone::class, 'json');
