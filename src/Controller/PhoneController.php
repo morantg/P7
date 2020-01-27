@@ -24,8 +24,7 @@ class PhoneController extends AbstractController
     public function showAction(Phone $phone, PhoneRepository $phoneRepository, Request $request)
     {
         
-        $phone = $phoneRepository->find($phone->getId());
-
+        //$phone = $phoneRepository->find($phone->getId());
         return $this->json($phone, 200, [], ['groups' => 'phone:read']);
     }
     
@@ -81,6 +80,19 @@ class PhoneController extends AbstractController
             ], 400);
         }
         
+    }
+
+     /**
+     * @Route("/api/phones/{id}", name="app_phones_delete", methods={"DELETE"})
+     */
+    public function deleteAction(Phone $phone, Request $request, EntityManagerInterface $em)
+    {
+        //$phone = $phoneRepository->find($phone->getId());
+
+        $em->remove($phone);
+        $em->flush();
+        
+        return $this->json(null, 204);
     }
 
 }
