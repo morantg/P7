@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Phone;
 use App\Repository\PhoneRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -42,7 +44,22 @@ class PhoneController extends AbstractController
         return $this->json($phones, 200, [], ['groups' => 'phone:read']);
     }
 
-    
+    /**
+     * @Route("/api/phones", name="app_phones_create", methods={"POST"})
+     */
+    public function createAction(Request $request, SerializerInterface $serializer, EntityManagerInterface $em)
+    {
+        $jsonRecu = $request->getContent();
+
+        $phone = $serializer->deserialize($jsonRecu, Phone::class, 'json');
+
+        $em->persist($phone);
+        $em->flush();
+        
+        return $this->json($phone, 201, [], ['groups' => 'phone:read']);
+        
+    }
+
 }
 
 
