@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 
 class PhoneController extends AbstractController
 {
@@ -47,21 +49,37 @@ class PhoneController extends AbstractController
     /**
      * @Route("/api/phones", name="app_phones_create", methods={"POST"})
      */
-    public function createAction(Request $request, SerializerInterface $serializer, EntityManagerInterface $em)
+    public function createAction(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator)
     {
         
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            return new JsonResponse(['error' => 'Role ADMIN nécessaire'], 401);
+            return $this->json([
+                'status' => 401,
+                'message' => "Acces Denied"
+            ], 401);
         }
         
         $jsonRecu = $request->getContent();
 
+        try {
         $phone = $serializer->deserialize($jsonRecu, Phone::class, 'json');
+
+        $errors = $validator->validate($phone);
+
+        if(count($errors) > 0) {
+            return $this->json($errors, 400);
+        }
 
         $em->persist($phone);
         $em->flush();
         
         return $this->json($phone, 201, [], ['groups' => 'phone:read']);
+        }catch (NotEncodableValueException $e) {
+            return $this->json([
+                'status' => 400,
+                'message' => $e->getMessage()
+            ], 400);
+        }
         
     }
 

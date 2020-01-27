@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")
@@ -20,42 +21,49 @@ class Phone
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
+     * @Assert\NotBlank
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
+     * @Assert\NotBlank
      */
     private $reference;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
+     * @Assert\NotBlank
      */
     private $couleur;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
+     * @Assert\NotBlank
      */
     private $dimension;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
+     * @Assert\NotBlank
      */
     private $prix;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
+     * @Assert\NotBlank
      */
     private $image;
 
     /**
      * @ORM\Column(type="text")
      * @Groups("phone:read")
+     * @Assert\NotBlank
      */
     private $description;
 
