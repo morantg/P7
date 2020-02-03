@@ -19,6 +19,7 @@ use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 
 class ClientController extends AbstractController
 {
+    
     /**
      * @Route("/api/clients/{id}", name="app_clients_show", methods={"GET"})
      */
@@ -87,6 +88,7 @@ class ClientController extends AbstractController
      */
     public function updateAction(Client $client,ClientRepository $clientRepository, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator, UserInterface $user)
     {
+        
         if($user != $client->getUser()){
             return $this->json([
                 'status' => 401,
@@ -128,6 +130,25 @@ class ClientController extends AbstractController
             'message' => "le client a bien été mis à jour"
         ], 200);
         
+    }
+
+     /**
+     * @Route("/api/clients/{id}", name="app_clients_delete", methods={"DELETE"})
+     */
+    public function deleteAction(Client $client, Request $request, EntityManagerInterface $em, UserInterface $user)
+    {
+        
+        if($user != $client->getUser()){
+            return $this->json([
+                'status' => 401,
+                'message' => "Acces Denied"
+            ], 401);
+        }
+        
+        $em->remove($client);
+        $em->flush();
+        
+        return $this->json(null, 204);
     }
 
 }
