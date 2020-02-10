@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Phone;
 use App\Form\PhoneType;
+use OpenApi\Annotations\Post;
+use OpenApi\Annotations as OA;
 use App\Repository\PhoneRepository;
+use OpenApi\Annotations\RequestBody;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +25,21 @@ class PhoneController extends AbstractController
     
     /**
      * @Route("/api/phones/{id}", name="app_phones_show", methods={"GET"})
+     *  @OA\Get(
+     *     path="/api/phones/{id}",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",     
+     *         description="id du téléphone",
+     *         required=true,
+     *         @OA\Schema(type="integer")  
+     *     ),  
+     *     @OA\Response(
+     *         response="200",
+     *         description="Le téléphone",
+     *         @OA\JsonContent(ref="#/components/schemas/Phone")  
+     *     ) 
+     * )
      */
     public function showAction(Phone $phone, PhoneRepository $phoneRepository, Request $request)
     {
@@ -31,6 +49,21 @@ class PhoneController extends AbstractController
     
     /**
      * @Route("/api/phones/{page<\d+>?1}", name="app_phones_list", methods={"GET"})
+     * @OA\Get(
+     *     path="/api/phones",
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="La page a consulter",
+     *         required=false,
+     *         @OA\Schema(type="integer")     
+     *     ), 
+     *     @OA\Response(
+     *         response="200",
+     *         description="Nos téléphones",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Phone"))  
+     *     ) 
+     * )
      */
     public function listAction(PhoneRepository $phoneRepository, Request $request)
     {
@@ -48,6 +81,18 @@ class PhoneController extends AbstractController
 
     /**
      * @Route("/api/phones", name="app_phones_create", methods={"POST"})
+     * @OA\Post(
+     *     path="/api/phones",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Phone")         
+     *     ), 
+     *     @OA\Response(
+     *         response="201",
+     *         description="Un téléphone",
+     *         @OA\JsonContent(ref="#/components/schemas/Phone")  
+     *     ) 
+     * )
      */
     public function createAction(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator)
     {
@@ -85,6 +130,25 @@ class PhoneController extends AbstractController
 
     /**
      * @Route("/api/phones/{id}", name="app_phones_update", methods={"PUT"})
+     * @OA\Put(
+     *     path="/api/phones/{id}",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",     
+     *         description="id du téléphone",
+     *         required=true,
+     *         @OA\Schema(type="integer")  
+     *     ),   
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Phone")
+     *     ), 
+     *     @OA\Response(
+     *         response="200",
+     *         description="Un téléphone",
+     *         @OA\JsonContent(ref="#/components/schemas/Phone")  
+     *     ) 
+     * )
      */
     public function updateAction(Phone $phone,PhoneRepository $phoneRepository, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator)
     {
@@ -128,6 +192,21 @@ class PhoneController extends AbstractController
 
      /**
      * @Route("/api/phones/{id}", name="app_phones_delete", methods={"DELETE"})
+     * @OA\Delete(
+     *     path="/api/phones/{id}",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",     
+     *         description="id du téléphone",
+     *         required=true,
+     *         @OA\Schema(type="integer")  
+     *     ),   
+     *     @OA\Response(
+     *         response="204",
+     *         description="Un téléphone",
+     *         @OA\JsonContent(ref="#/components/schemas/Phone")  
+     *     ) 
+     * )
      */
     public function deleteAction(Phone $phone, Request $request, EntityManagerInterface $em)
     {

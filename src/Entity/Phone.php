@@ -5,9 +5,11 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")
+ * @OA\Schema()
  */
 class Phone
 {
@@ -15,6 +17,7 @@ class Phone
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @OA\Property(type="integer")
      */
     private $id;
 
@@ -22,6 +25,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $nom;
 
@@ -29,6 +33,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $reference;
 
@@ -36,6 +41,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $couleur;
 
@@ -43,6 +49,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $dimension;
 
@@ -50,6 +57,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $prix;
 
@@ -57,6 +65,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $image;
 
@@ -64,6 +73,7 @@ class Phone
      * @ORM\Column(type="text")
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $description;
 
