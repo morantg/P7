@@ -16,12 +16,28 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
+use OpenApi\Annotations as OA;
 
 class ClientController extends AbstractController
 {
     
     /**
      * @Route("/api/clients/{id}", name="app_clients_show", methods={"GET"})
+     * @OA\Get(
+     *     path="/api/clients/{id}",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",     
+     *         description="id du client",
+     *         required=true,
+     *         @OA\Schema(type="integer")  
+     *     ),  
+     *     @OA\Response(
+     *         response="200",
+     *         description="Le client",
+     *         @OA\JsonContent(ref="#/components/schemas/Client")  
+     *     ) 
+     * )
      */
     public function showAction(Client $client, ClientRepository $clientRepository, Request $request, UserInterface $user)
     {
@@ -37,6 +53,14 @@ class ClientController extends AbstractController
     
     /**
      * @Route("/api/clients", name="app_clients_list", methods={"GET"})
+     * @OA\Get(
+     *     path="/api/clients",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Les clients",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Client"))  
+     *     ) 
+     * )
      */
     public function listAction(ClientRepository $clientRepository, Request $request, UserInterface $user)
     {
@@ -53,6 +77,18 @@ class ClientController extends AbstractController
 
     /**
      * @Route("/api/clients", name="app_clients_create", methods={"POST"})
+     * @OA\Post(
+     *     path="/api/clients",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Client")         
+     *     ), 
+     *     @OA\Response(
+     *         response="201",
+     *         description="Un client",
+     *         @OA\JsonContent(ref="#/components/schemas/Client")  
+     *     ) 
+     * )
      */
     public function createAction(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator, UserInterface $user)
     {
@@ -85,6 +121,25 @@ class ClientController extends AbstractController
 
     /**
      * @Route("/api/clients/{id}", name="app_clients_update", methods={"PUT"})
+     * @OA\Put(
+     *     path="/api/clients/{id}",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",     
+     *         description="id du client",
+     *         required=true,
+     *         @OA\Schema(type="integer")  
+     *     ),   
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Client")
+     *     ), 
+     *     @OA\Response(
+     *         response="200",
+     *         description="Un client",
+     *         @OA\JsonContent(ref="#/components/schemas/Client")  
+     *     ) 
+     * )
      */
     public function updateAction(Client $client,ClientRepository $clientRepository, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator, UserInterface $user)
     {
@@ -134,6 +189,21 @@ class ClientController extends AbstractController
 
      /**
      * @Route("/api/clients/{id}", name="app_clients_delete", methods={"DELETE"})
+     * @OA\Delete(
+     *     path="/api/clients/{id}",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",     
+     *         description="id du client",
+     *         required=true,
+     *         @OA\Schema(type="integer")  
+     *     ),   
+     *     @OA\Response(
+     *         response="204",
+     *         description="Un client",
+     *         @OA\JsonContent(ref="#/components/schemas/Client")  
+     *     ) 
+     * )
      */
     public function deleteAction(Client $client, Request $request, EntityManagerInterface $em, UserInterface $user)
     {

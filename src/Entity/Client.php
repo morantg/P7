@@ -5,9 +5,11 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
+ * @OA\Schema()
  */
 class Client
 {
@@ -15,6 +17,7 @@ class Client
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @OA\Property(type="integer")
      */
     private $id;
 
@@ -22,6 +25,7 @@ class Client
      * @ORM\Column(type="string", length=255)
      * @Groups("client:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $nom;
 
@@ -29,6 +33,7 @@ class Client
      * @ORM\Column(type="string", length=255)
      * @Groups("client:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $prenom;
 
@@ -36,6 +41,7 @@ class Client
      * @ORM\Column(type="string", length=255)
      * @Groups("client:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $mail;
 
@@ -43,6 +49,7 @@ class Client
      * @ORM\Column(type="string", length=255)
      * @Groups("client:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $adresse;
 
@@ -50,12 +57,14 @@ class Client
      * @ORM\Column(type="string", length=255)
      * @Groups("client:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups("client:read")
+     * @OA\Property(type="string", format="date-time")
      */
     private $dateAjoutAt;
 

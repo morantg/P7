@@ -25,7 +25,7 @@ class PhoneController extends AbstractController
     
     /**
      * @Route("/api/phones/{id}", name="app_phones_show", methods={"GET"})
-     *  @OA\Get(
+     * @OA\Get(
      *     path="/api/phones/{id}",
      *     @OA\Parameter(
      *         name="id",
