@@ -158,7 +158,7 @@ class PhoneController extends AbstractController
      *     ) 
      * )
      */
-    public function updateAction(Phone $phone, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator)
+    public function updateAction(Phone $phone, Request $request, SerializerInterface $serializer, EntityManagerInterface $manager, ValidatorInterface $validator)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             return $this->json([
@@ -192,8 +192,8 @@ class PhoneController extends AbstractController
             ], 400);
         }
 
-        $em->persist($phone);
-        $em->flush();
+        $manager->persist($phone);
+        $manager->flush();
 
         return $this->json([
             'status' => 200,
@@ -220,7 +220,7 @@ class PhoneController extends AbstractController
      *     ) 
      * )
      */
-    public function deleteAction(Phone $phone, EntityManagerInterface $em)
+    public function deleteAction(Phone $phone, EntityManagerInterface $manager)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             return $this->json([
@@ -229,8 +229,8 @@ class PhoneController extends AbstractController
             ], 401);
         }
         
-        $em->remove($phone);
-        $em->flush();
+        $manager->remove($phone);
+        $manager->flush();
         
         return $this->json(null, 204);
     }

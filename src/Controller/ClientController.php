@@ -152,7 +152,7 @@ class ClientController extends AbstractController
      *     ) 
      * )
      */
-    public function updateAction(Client $client, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator, UserInterface $user)
+    public function updateAction(Client $client, Request $request, SerializerInterface $serializer, EntityManagerInterface $manager, ValidatorInterface $validator, UserInterface $user)
     {
         
         if($user != $client->getUser() && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
@@ -189,8 +189,8 @@ class ClientController extends AbstractController
             ], 400);
         }
 
-        $em->persist($client);
-        $em->flush();
+        $manager->persist($client);
+        $manager->flush();
 
         return $this->json([
             'status' => 200,
@@ -217,7 +217,7 @@ class ClientController extends AbstractController
      *     ) 
      * )
      */
-    public function deleteAction(Client $client, EntityManagerInterface $em, UserInterface $user)
+    public function deleteAction(Client $client, EntityManagerInterface $manager, UserInterface $user)
     {
         
         if($user != $client->getUser() && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
@@ -227,8 +227,8 @@ class ClientController extends AbstractController
             ], 401);
         }
         
-        $em->remove($client);
-        $em->flush();
+        $manager->remove($client);
+        $manager->flush();
         
         return $this->json(null, 204);
     }
