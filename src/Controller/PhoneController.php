@@ -79,7 +79,7 @@ class PhoneController extends AbstractController
         if(is_null($page) || $page < 1){
             $page = 1;
         }
-        $limit = 2;
+        $limit = 10;
         
         $phones = $phoneRepository->findAllPhones($page, $limit);
 

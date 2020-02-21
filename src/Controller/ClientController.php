@@ -48,8 +48,7 @@ class ClientController extends AbstractController
      */
     public function showAction(Client $client, ClientRepository $clientRepository, Request $request, UserInterface $user)
     {
-        
-        if($user != $client->getUser()){
+        if($user != $client->getUser() && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
             return $this->json([
                 'status' => 401,
                 'message' => "Acces Denied"
@@ -59,7 +58,7 @@ class ClientController extends AbstractController
     }
     
     /**
-     * @Route("/api/clients", name="app_clients_list", methods={"GET"})
+     * @Route("/api/clients/{page<\d+>?1}", name="app_clients_list", methods={"GET"})
      * @OA\Get(
      *     path="/api/clients",
      *     @OA\Response(
@@ -71,12 +70,18 @@ class ClientController extends AbstractController
      */
     public function listAction(ClientRepository $clientRepository, Request $request, UserInterface $user)
     {
+        $page = $request->query->get('page');
+        if(is_null($page) || $page < 1){
+            $page = 1;
+        }
+        $limit = 10;
+
+        
+        
         if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
-            $clients = $clientRepository->findAll();
+            $clients = $clientRepository->findAllClients($page, $limit);
         }else{
-            $clients = $clientRepository->findBy([
-                'user' => $user
-            ]);
+            $clients = $clientRepository->findAllClientsByUser($page, $limit, $user);
         }
         
         return $this->json($clients, 200, [], ['groups' => 'client:read']);
@@ -151,7 +156,7 @@ class ClientController extends AbstractController
     public function updateAction(Client $client,ClientRepository $clientRepository, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator, UserInterface $user)
     {
         
-        if($user != $client->getUser()){
+        if($user != $client->getUser() && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
             return $this->json([
                 'status' => 401,
                 'message' => "Acces Denied"
@@ -216,7 +221,7 @@ class ClientController extends AbstractController
     public function deleteAction(Client $client, Request $request, EntityManagerInterface $em, UserInterface $user)
     {
         
-        if($user != $client->getUser()){
+        if($user != $client->getUser() && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
             return $this->json([
                 'status' => 401,
                 'message' => "Acces Denied"

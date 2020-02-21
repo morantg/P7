@@ -23,7 +23,7 @@
     ],
     "paths": {
         "/api/login_check": {
-            "post": {
+            "get": {
                 "tags": [
                     {
                         "tags": "authentification"
@@ -113,6 +113,22 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "La ressource ne vous appartient pas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Acces Denied"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -154,6 +170,38 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "La ressource n'existe pas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Resource not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "La ressource ne vous appartient pas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Acces Denied"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -185,6 +233,38 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "La ressource n'existe pas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Resource not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "La ressource ne vous appartient pas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Acces Denied"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -194,6 +274,17 @@
                 "tags": [
                     {
                         "tags": "client"
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "La page a consulter",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "operationId": "App\\Controller\\ClientController::listAction",
@@ -298,6 +389,7 @@
                         "tags": "phone"
                     }
                 ],
+                "summary": "rôle admin seulement",
                 "operationId": "App\\Controller\\PhoneController::updateAction",
                 "parameters": [
                     {
@@ -330,6 +422,22 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "La ressource n'existe pas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Resource not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -339,6 +447,7 @@
                         "tags": "phone"
                     }
                 ],
+                "summary": "rôle admin seulement",
                 "operationId": "App\\Controller\\PhoneController::deleteAction",
                 "parameters": [
                     {
@@ -358,6 +467,22 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Phone"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "La ressource n'existe pas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Resource not found"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -406,6 +531,7 @@
                         "tags": "phone"
                     }
                 ],
+                "summary": "rôle admin seulement",
                 "operationId": "App\\Controller\\PhoneController::createAction",
                 "requestBody": {
                     "required": true,
