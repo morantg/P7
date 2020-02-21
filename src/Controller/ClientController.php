@@ -46,7 +46,7 @@ class ClientController extends AbstractController
      *     )      
      * )
      */
-    public function showAction(Client $client, ClientRepository $clientRepository, UserInterface $user)
+    public function showAction(Client $client, UserInterface $user)
     {
         if($user != $client->getUser() && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
             return $this->json([
@@ -68,7 +68,7 @@ class ClientController extends AbstractController
      *     ) 
      * )
      */
-    public function listAction(ClientRepository $clientRepository, UserInterface $user)
+    public function listAction(ClientRepository $clientRepository, UserInterface $user, Request $request)
     {
         $page = $request->query->get('page');
         if(is_null($page) || $page < 1){

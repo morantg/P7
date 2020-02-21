@@ -48,7 +48,7 @@ class PhoneController extends AbstractController
      *     ) 
      * )
      */
-    public function showAction(Phone $phone, PhoneRepository $phoneRepository)
+    public function showAction(Phone $phone)
     {
         
         return $this->json($phone, 200, [], ['groups' => 'phone:read']);
