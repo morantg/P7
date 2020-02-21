@@ -97,6 +97,22 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "La ressource n'existe pas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Resource not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -257,6 +273,22 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "La ressource n'existe pas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Resource not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -404,9 +436,6 @@
         "schemas": {
             "Client": {
                 "properties": {
-                    "id": {
-                        "type": "integer"
-                    },
                     "nom": {
                         "type": "string"
                     },
@@ -421,19 +450,12 @@
                     },
                     "telephone": {
                         "type": "string"
-                    },
-                    "dateAjoutAt": {
-                        "type": "string",
-                        "format": "date-time"
                     }
                 },
                 "type": "object"
             },
             "Phone": {
                 "properties": {
-                    "id": {
-                        "type": "integer"
-                    },
                     "nom": {
                         "type": "string"
                     },

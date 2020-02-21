@@ -38,6 +38,13 @@ class PhoneController extends AbstractController
      *         response="200",
      *         description="Le téléphone",
      *         @OA\JsonContent(ref="#/components/schemas/Phone")  
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="La ressource n'existe pas",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Resource not found")
+     *         )  
      *     ) 
      * )
      */

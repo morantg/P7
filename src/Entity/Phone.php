@@ -17,7 +17,7 @@ class Phone
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @OA\Property(type="integer")
+     * @Groups("phone:read")
      */
     private $id;
 
@@ -79,11 +79,13 @@ class Phone
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("phone:read")
      */
     private $dateAjoutAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups("phone:read")
      */
     private $dateModifAt;
 

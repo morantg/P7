@@ -17,7 +17,7 @@ class Client
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @OA\Property(type="integer")
+     * @Groups("client:read")
      */
     private $id;
 
@@ -64,7 +64,6 @@ class Client
     /**
      * @ORM\Column(type="datetime")
      * @Groups("client:read")
-     * @OA\Property(type="string", format="date-time")
      */
     private $dateAjoutAt;
 
@@ -77,7 +76,6 @@ class Client
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups("client:read")
-     * @OA\Property(type="string", format="date-time")
      */
     private $dateModifAt;
 

@@ -36,7 +36,14 @@ class ClientController extends AbstractController
      *         response="200",
      *         description="Le client",
      *         @OA\JsonContent(ref="#/components/schemas/Client")  
-     *     ) 
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="La ressource n'existe pas",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Resource not found")
+     *         )  
+     *     )      
      * )
      */
     public function showAction(Client $client, ClientRepository $clientRepository, Request $request, UserInterface $user)
