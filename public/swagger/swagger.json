@@ -10,9 +10,22 @@
             "description": "Mon api"
         }
     ],
+    "tags": [
+        {
+            "tags": "phone"
+        },
+        {
+            "tags": "client"
+        }
+    ],
     "paths": {
         "/api/clients/{id}": {
             "get": {
+                "tags": [
+                    {
+                        "tags": "client"
+                    }
+                ],
                 "operationId": "App\\Controller\\ClientController::showAction",
                 "parameters": [
                     {
@@ -39,6 +52,11 @@
                 }
             },
             "put": {
+                "tags": [
+                    {
+                        "tags": "client"
+                    }
+                ],
                 "operationId": "App\\Controller\\ClientController::updateAction",
                 "parameters": [
                     {
@@ -75,6 +93,11 @@
                 }
             },
             "delete": {
+                "tags": [
+                    {
+                        "tags": "client"
+                    }
+                ],
                 "operationId": "App\\Controller\\ClientController::deleteAction",
                 "parameters": [
                     {
@@ -103,6 +126,11 @@
         },
         "/api/clients": {
             "get": {
+                "tags": [
+                    {
+                        "tags": "client"
+                    }
+                ],
                 "operationId": "App\\Controller\\ClientController::listAction",
                 "responses": {
                     "200": {
@@ -121,6 +149,11 @@
                 }
             },
             "post": {
+                "tags": [
+                    {
+                        "tags": "client"
+                    }
+                ],
                 "operationId": "App\\Controller\\ClientController::createAction",
                 "requestBody": {
                     "required": true,
@@ -148,6 +181,11 @@
         },
         "/api/phones/{id}": {
             "get": {
+                "tags": [
+                    {
+                        "tags": "phone"
+                    }
+                ],
                 "operationId": "App\\Controller\\PhoneController::showAction",
                 "parameters": [
                     {
@@ -174,6 +212,11 @@
                 }
             },
             "put": {
+                "tags": [
+                    {
+                        "tags": "phone"
+                    }
+                ],
                 "operationId": "App\\Controller\\PhoneController::updateAction",
                 "parameters": [
                     {
@@ -210,6 +253,11 @@
                 }
             },
             "delete": {
+                "tags": [
+                    {
+                        "tags": "phone"
+                    }
+                ],
                 "operationId": "App\\Controller\\PhoneController::deleteAction",
                 "parameters": [
                     {
@@ -238,6 +286,11 @@
         },
         "/api/phones": {
             "get": {
+                "tags": [
+                    {
+                        "tags": "phone"
+                    }
+                ],
                 "operationId": "App\\Controller\\PhoneController::listAction",
                 "parameters": [
                     {
@@ -267,6 +320,11 @@
                 }
             },
             "post": {
+                "tags": [
+                    {
+                        "tags": "phone"
+                    }
+                ],
                 "operationId": "App\\Controller\\PhoneController::createAction",
                 "requestBody": {
                     "required": true,
