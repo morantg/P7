@@ -101,7 +101,7 @@ class PhoneController extends AbstractController
      *     ) 
      * )
      */
-    public function createAction(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator)
+    public function createAction(Request $request, SerializerInterface $serializer, EntityManagerInterface $manager, ValidatorInterface $validator)
     {
         
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
@@ -123,8 +123,8 @@ class PhoneController extends AbstractController
             return $this->json($errors, 400);
         }
 
-        $em->persist($phone);
-        $em->flush();
+        $manager->persist($phone);
+        $manager->flush();
         
         return $this->json($phone, 201, [], ['groups' => 'phone:read']);
         }catch (NotEncodableValueException $e) {

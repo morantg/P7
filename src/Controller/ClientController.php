@@ -71,18 +71,17 @@ class ClientController extends AbstractController
     public function listAction(ClientRepository $clientRepository, UserInterface $user, Request $request)
     {
         $page = $request->query->get('page');
-        if(is_null($page) || $page < 1){
+        if($page === null || $page < 1){
             $page = 1;
         }
         $limit = 10;
 
-        
-        
         if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
             $clients = $clientRepository->findAllClients($page, $limit);
-        }else{
-            $clients = $clientRepository->findAllClientsByUser($page, $limit, $user);
+            return $this->json($clients, 200, [], ['groups' => 'client:read']);
         }
+            
+        $clients = $clientRepository->findAllClientsByUser($page, $limit, $user);
         
         return $this->json($clients, 200, [], ['groups' => 'client:read']);
     }
@@ -102,7 +101,7 @@ class ClientController extends AbstractController
      *     ) 
      * )
      */
-    public function createAction(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator, UserInterface $user)
+    public function createAction(Request $request, SerializerInterface $serializer, EntityManagerInterface $manager, ValidatorInterface $validator, UserInterface $user)
     {
         
         $jsonRecu = $request->getContent();
@@ -118,8 +117,8 @@ class ClientController extends AbstractController
             return $this->json($errors, 400);
         }
 
-        $em->persist($client);
-        $em->flush();
+        $manager->persist($client);
+        $manager->flush();
         
         return $this->json($client, 201, [], ['groups' => 'client:read']);
         }catch (NotEncodableValueException $e) {
