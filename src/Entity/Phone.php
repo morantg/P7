@@ -77,6 +77,16 @@ class Phone
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateAjoutAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModifAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -162,6 +172,30 @@ class Phone
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDateAjoutAt(): ?\DateTimeInterface
+    {
+        return $this->dateAjoutAt;
+    }
+
+    public function setDateAjoutAt(\DateTimeInterface $dateAjoutAt): self
+    {
+        $this->dateAjoutAt = $dateAjoutAt;
+
+        return $this;
+    }
+
+    public function getDateModifAt(): ?\DateTimeInterface
+    {
+        return $this->dateModifAt;
+    }
+
+    public function setDateModifAt(?\DateTimeInterface $dateModifAt): self
+    {
+        $this->dateModifAt = $dateModifAt;
 
         return $this;
     }

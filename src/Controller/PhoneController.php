@@ -108,6 +108,7 @@ class PhoneController extends AbstractController
 
         try {
         $phone = $serializer->deserialize($jsonRecu, Phone::class, 'json');
+        $phone->setDateAjoutAt(new \DateTime());
 
         $errors = $validator->validate($phone);
 
@@ -171,7 +172,11 @@ class PhoneController extends AbstractController
         }
         
         $form = $this->createForm(PhoneType::class, $phone);
-        $this->processForm($request, $form);
+        $data = json_decode($request->getContent(), true);
+        $data['dateAjoutAt'] = $phone->getDateAjoutAt();
+        
+        $form->submit($data);
+        $phone->setDateModifAt(new \DateTime());
         
         }catch(NotEncodableValueException $e){
             return $this->json([
@@ -221,12 +226,6 @@ class PhoneController extends AbstractController
         $em->flush();
         
         return $this->json(null, 204);
-    }
-
-    private function processForm(Request $request, FormInterface $form)
-    {
-        $data = json_decode($request->getContent(), true);
-        $form->submit($data);
     }
 
 }

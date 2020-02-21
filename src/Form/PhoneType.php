@@ -19,6 +19,7 @@ class PhoneType extends AbstractType
             ->add('prix')
             ->add('image')
             ->add('description')
+            ->add('dateAjoutAt')
         ;
     }
 
