@@ -48,7 +48,7 @@ class PhoneController extends AbstractController
      *     ) 
      * )
      */
-    public function showAction(Phone $phone, PhoneRepository $phoneRepository, Request $request)
+    public function showAction(Phone $phone, PhoneRepository $phoneRepository)
     {
         
         return $this->json($phone, 200, [], ['groups' => 'phone:read']);
@@ -76,7 +76,7 @@ class PhoneController extends AbstractController
     {
         
         $page = $request->query->get('page');
-        if(is_null($page) || $page < 1){
+        if($page === null || $page < 1){
             $page = 1;
         }
         $limit = 10;
@@ -158,7 +158,7 @@ class PhoneController extends AbstractController
      *     ) 
      * )
      */
-    public function updateAction(Phone $phone,PhoneRepository $phoneRepository, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator)
+    public function updateAction(Phone $phone, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             return $this->json([
@@ -220,7 +220,7 @@ class PhoneController extends AbstractController
      *     ) 
      * )
      */
-    public function deleteAction(Phone $phone, Request $request, EntityManagerInterface $em)
+    public function deleteAction(Phone $phone, EntityManagerInterface $em)
     {
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             return $this->json([
