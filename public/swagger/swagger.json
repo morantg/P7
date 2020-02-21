@@ -16,9 +16,58 @@
         },
         {
             "tags": "client"
+        },
+        {
+            "tags": "authentification"
         }
     ],
     "paths": {
+        "/api/login_check": {
+            "post": {
+                "tags": [
+                    {
+                        "tags": "authentification"
+                    }
+                ],
+                "operationId": "loginUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": "string",
+                                    "password": "string"
+                                },
+                                "example":{
+                                    "username": "entrez votre email",
+                                    "password": "entrez votre password"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Votre token JWT",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": "string"
+                                    },
+                                    "example":{
+                                        "token": "Incluez le dans le header pour effectuer vos requêtes => key: Authorization, value: BEARER votre token ici"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },    
         "/api/clients/{id}": {
             "get": {
                 "tags": [
