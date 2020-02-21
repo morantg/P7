@@ -74,6 +74,13 @@ class Client
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups("client:read")
+     * @OA\Property(type="string", format="date-time")
+     */
+    private $dateModifAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -159,6 +166,18 @@ class Client
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getDateModifAt(): ?\DateTimeInterface
+    {
+        return $this->dateModifAt;
+    }
+
+    public function setDateModifAt(?\DateTimeInterface $dateModifAt): self
+    {
+        $this->dateModifAt = $dateModifAt;
 
         return $this;
     }

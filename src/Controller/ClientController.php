@@ -169,6 +169,7 @@ class ClientController extends AbstractController
         $data['user'] = $client->getUser();
         
         $form->submit($data);
+        $client->setDateModifAt(new \DateTime());
         
         }catch(NotEncodableValueException $e){
             return $this->json([
