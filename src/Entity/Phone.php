@@ -5,9 +5,11 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")
+ * @OA\Schema()
  */
 class Phone
 {
@@ -15,6 +17,7 @@ class Phone
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("phone:read")
      */
     private $id;
 
@@ -22,6 +25,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $nom;
 
@@ -29,6 +33,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $reference;
 
@@ -36,6 +41,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $couleur;
 
@@ -43,6 +49,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $dimension;
 
@@ -50,6 +57,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $prix;
 
@@ -57,6 +65,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $image;
 
@@ -64,8 +73,21 @@ class Phone
      * @ORM\Column(type="text")
      * @Groups("phone:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Groups("phone:read")
+     */
+    private $dateAjoutAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups("phone:read")
+     */
+    private $dateModifAt;
 
     public function getId(): ?int
     {
@@ -152,6 +174,30 @@ class Phone
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDateAjoutAt(): ?\DateTimeInterface
+    {
+        return $this->dateAjoutAt;
+    }
+
+    public function setDateAjoutAt(\DateTimeInterface $dateAjoutAt): self
+    {
+        $this->dateAjoutAt = $dateAjoutAt;
+
+        return $this;
+    }
+
+    public function getDateModifAt(): ?\DateTimeInterface
+    {
+        return $this->dateModifAt;
+    }
+
+    public function setDateModifAt(?\DateTimeInterface $dateModifAt): self
+    {
+        $this->dateModifAt = $dateModifAt;
 
         return $this;
     }

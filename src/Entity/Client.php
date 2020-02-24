@@ -5,9 +5,11 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
+ * @OA\Schema()
  */
 class Client
 {
@@ -15,6 +17,7 @@ class Client
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("client:read")
      */
     private $id;
 
@@ -22,6 +25,7 @@ class Client
      * @ORM\Column(type="string", length=255)
      * @Groups("client:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $nom;
 
@@ -29,6 +33,7 @@ class Client
      * @ORM\Column(type="string", length=255)
      * @Groups("client:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $prenom;
 
@@ -36,6 +41,7 @@ class Client
      * @ORM\Column(type="string", length=255)
      * @Groups("client:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $mail;
 
@@ -43,6 +49,7 @@ class Client
      * @ORM\Column(type="string", length=255)
      * @Groups("client:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $adresse;
 
@@ -50,6 +57,7 @@ class Client
      * @ORM\Column(type="string", length=255)
      * @Groups("client:read")
      * @Assert\NotBlank
+     * @OA\Property(type="string")
      */
     private $telephone;
 
@@ -64,6 +72,12 @@ class Client
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups("client:read")
+     */
+    private $dateModifAt;
 
     public function getId(): ?int
     {
@@ -150,6 +164,18 @@ class Client
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getDateModifAt(): ?\DateTimeInterface
+    {
+        return $this->dateModifAt;
+    }
+
+    public function setDateModifAt(?\DateTimeInterface $dateModifAt): self
+    {
+        $this->dateModifAt = $dateModifAt;
 
         return $this;
     }
