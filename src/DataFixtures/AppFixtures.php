@@ -21,26 +21,25 @@ class AppFixtures extends Fixture
              ->setRoles(["ROLE_USER"])
              ->setNom($faker->lastName())
              ->setPrenom($faker->firstNameFemale());
-        $manager->persist($user);     
+        $manager->persist($user);
         
         $user2 = new User();
         $user2->setEmail('user2@user.com')
              ->setPassword('$2y$13$vtgqKAtTOc.A7RxKIuRc6uhcQrOcbJU0/X8kgTbEvVsT9LJYzSKN.')
              ->setRoles(["ROLE_USER"])
              ->setNom($faker->lastName())
-             ->setPrenom($faker->firstNameMale());     
-        $manager->persist($user2);    
+             ->setPrenom($faker->firstNameMale());
+        $manager->persist($user2);
         
         $admin = new User();
         $admin->setEmail('admin@admin.com')
              ->setPassword('$2y$13$vtgqKAtTOc.A7RxKIuRc6uhcQrOcbJU0/X8kgTbEvVsT9LJYzSKN.')
              ->setRoles(["ROLE_ADMIN"])
              ->setNom($faker->lastName())
-             ->setPrenom($faker->firstNameMale());  
+             ->setPrenom($faker->firstNameMale());
         $manager->persist($admin);
 
-        for($i = 0; $i < 10; $i++){
-        
+        for ($i = 0; $i < 10; $i++) {
             $client = new Client();
 
             $client->setNom($faker->lastName())
@@ -54,8 +53,7 @@ class AppFixtures extends Fixture
             $manager->persist($client);
         }
 
-        for($i = 0; $i < 10; $i++){
-        
+        for ($i = 0; $i < 10; $i++) {
             $client = new Client();
 
             $client->setNom($faker->lastName())
@@ -69,14 +67,13 @@ class AppFixtures extends Fixture
             $manager->persist($client);
         }
 
-        for($i = 0; $i < 20; $i++){
-        
+        for ($i = 0; $i < 20; $i++) {
             $phone = new Phone();
 
             $phone->setNom($faker->word(8))
                   ->setReference($faker->randomNumber(8))
                   ->setCouleur($faker->colorName())
-                  ->setDimension($faker->randomNumber(2) . 'x' . $faker->randomNumber(2) )
+                  ->setDimension($faker->randomNumber(2) . 'x' . $faker->randomNumber(2))
                   ->setPrix($faker->randomNumber(3))
                   ->setImage($faker->imageUrl())
                   ->setDescription($faker->paragraph())
@@ -85,7 +82,6 @@ class AppFixtures extends Fixture
             $manager->persist($phone);
         }
 
-    $manager->flush();
-    
+        $manager->flush();
     }
 }

@@ -4,7 +4,8 @@ namespace App\EventListener;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 
-class AuthenticationSuccessListener{
+class AuthenticationSuccessListener
+{
 
     /**
      * @param AuthenticationSuccessEvent $event

@@ -29,23 +29,23 @@ class PhoneController extends AbstractController
      *     path="/api/phones/{id}",
      *     @OA\Parameter(
      *         name="id",
-     *         in="path",     
+     *         in="path",
      *         description="id du téléphone",
      *         required=true,
-     *         @OA\Schema(type="integer")  
-     *     ),  
+     *         @OA\Schema(type="integer")
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Le téléphone",
-     *         @OA\JsonContent(ref="#/components/schemas/Phone")  
+     *         @OA\JsonContent(ref="#/components/schemas/Phone")
      *     ),
      *     @OA\Response(
      *         response="404",
      *         description="La ressource n'existe pas",
      *         @OA\JsonContent(
      *              @OA\Property(property="message", type="string", example="Resource not found")
-     *         )  
-     *     ) 
+     *         )
+     *     )
      * )
      */
     public function showAction(Phone $phone)
@@ -63,20 +63,20 @@ class PhoneController extends AbstractController
      *         in="query",
      *         description="La page a consulter",
      *         required=false,
-     *         @OA\Schema(type="integer")     
-     *     ), 
+     *         @OA\Schema(type="integer")
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Nos téléphones",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Phone"))  
-     *     ) 
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Phone"))
+     *     )
      * )
      */
     public function listAction(PhoneRepository $phoneRepository, Request $request)
     {
         
         $page = $request->query->get('page');
-        if($page === null || $page < 1){
+        if ($page === null || $page < 1) {
             $page = 1;
         }
         $limit = 10;
@@ -92,13 +92,13 @@ class PhoneController extends AbstractController
      *     path="/api/phones",
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Phone")         
-     *     ), 
+     *         @OA\JsonContent(ref="#/components/schemas/Phone")
+     *     ),
      *     @OA\Response(
      *         response="201",
      *         description="Un téléphone",
-     *         @OA\JsonContent(ref="#/components/schemas/Phone")  
-     *     ) 
+     *         @OA\JsonContent(ref="#/components/schemas/Phone")
+     *     )
      * )
      */
     public function createAction(Request $request, SerializerInterface $serializer, EntityManagerInterface $manager, ValidatorInterface $validator)
@@ -114,26 +114,25 @@ class PhoneController extends AbstractController
         $jsonRecu = $request->getContent();
 
         try {
-        $phone = $serializer->deserialize($jsonRecu, Phone::class, 'json');
-        $phone->setDateAjoutAt(new \DateTime());
+            $phone = $serializer->deserialize($jsonRecu, Phone::class, 'json');
+            $phone->setDateAjoutAt(new \DateTime());
 
-        $errors = $validator->validate($phone);
+            $errors = $validator->validate($phone);
 
-        if(count($errors) > 0) {
-            return $this->json($errors, 400);
-        }
+            if (count($errors) > 0) {
+                return $this->json($errors, 400);
+            }
 
-        $manager->persist($phone);
-        $manager->flush();
+            $manager->persist($phone);
+            $manager->flush();
         
-        return $this->json($phone, 201, [], ['groups' => 'phone:read']);
-        }catch (NotEncodableValueException $e) {
+            return $this->json($phone, 201, [], ['groups' => 'phone:read']);
+        } catch (NotEncodableValueException $e) {
             return $this->json([
                 'status' => 400,
                 'message' => $e->getMessage()
             ], 400);
         }
-        
     }
 
     /**
@@ -142,20 +141,20 @@ class PhoneController extends AbstractController
      *     path="/api/phones/{id}",
      *     @OA\Parameter(
      *         name="id",
-     *         in="path",     
+     *         in="path",
      *         description="id du téléphone",
      *         required=true,
-     *         @OA\Schema(type="integer")  
-     *     ),   
+     *         @OA\Schema(type="integer")
+     *     ),
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/Phone")
-     *     ), 
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Un téléphone",
-     *         @OA\JsonContent(ref="#/components/schemas/Phone")  
-     *     ) 
+     *         @OA\JsonContent(ref="#/components/schemas/Phone")
+     *     )
      * )
      */
     public function updateAction(Phone $phone, Request $request, SerializerInterface $serializer, EntityManagerInterface $manager, ValidatorInterface $validator)
@@ -167,25 +166,23 @@ class PhoneController extends AbstractController
             ], 401);
         }
         
-        try{
+        try {
+            $jsonRecu = $request->getContent();
+            $phoneValidate = $serializer->deserialize($jsonRecu, Phone::class, 'json');
         
-        $jsonRecu = $request->getContent();
-        $phoneValidate = $serializer->deserialize($jsonRecu, Phone::class, 'json');
+            $errors = $validator->validate($phoneValidate);
         
-        $errors = $validator->validate($phoneValidate);
+            if (count($errors) > 0) {
+                return $this->json($errors, 400);
+            }
         
-        if(count($errors) > 0) {
-            return $this->json($errors, 400);
-        }
+            $form = $this->createForm(PhoneType::class, $phone);
+            $data = json_decode($request->getContent(), true);
+            $data['dateAjoutAt'] = $phone->getDateAjoutAt();
         
-        $form = $this->createForm(PhoneType::class, $phone);
-        $data = json_decode($request->getContent(), true);
-        $data['dateAjoutAt'] = $phone->getDateAjoutAt();
-        
-        $form->submit($data);
-        $phone->setDateModifAt(new \DateTime());
-        
-        }catch(NotEncodableValueException $e){
+            $form->submit($data);
+            $phone->setDateModifAt(new \DateTime());
+        } catch (NotEncodableValueException $e) {
             return $this->json([
                 'status' => 400,
                 'message' => $e->getMessage()
@@ -199,7 +196,6 @@ class PhoneController extends AbstractController
             'status' => 200,
             'message' => "le téléphone a bien été mis à jour"
         ], 200);
-        
     }
 
      /**
@@ -208,16 +204,16 @@ class PhoneController extends AbstractController
      *     path="/api/phones/{id}",
      *     @OA\Parameter(
      *         name="id",
-     *         in="path",     
+     *         in="path",
      *         description="id du téléphone",
      *         required=true,
-     *         @OA\Schema(type="integer")  
-     *     ),   
+     *         @OA\Schema(type="integer")
+     *     ),
      *     @OA\Response(
      *         response="204",
      *         description="Un téléphone",
-     *         @OA\JsonContent(ref="#/components/schemas/Phone")  
-     *     ) 
+     *         @OA\JsonContent(ref="#/components/schemas/Phone")
+     *     )
      * )
      */
     public function deleteAction(Phone $phone, EntityManagerInterface $manager)
@@ -234,9 +230,4 @@ class PhoneController extends AbstractController
         
         return $this->json(null, 204);
     }
-
 }
-
-
-
-
