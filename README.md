@@ -1,5 +1,6 @@
 # P7
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/63f9eaa7a9274ae38171e5431cc57054)](https://www.codacy.com/manual/morantg/P7?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=morantg/P7&amp;utm_campaign=Badge_Grade)
 
 # Pré-requis
 
